@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Side- Bar</title>
+      {% load static %}
+    <link rel="stylesheet" href="{% static 'GarbageBins/t.css' %}">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    </head>
+
+  <body>
+    <div class="header">
+        <h2><i class="fa fa-leaf" aria-hidden="true"> Garbage Monitoring</i></h2><b id="GM"><i class="fa fa-leaf" aria-hidden="true"></i> GM</b>
+    </div>
+        <input type="checkbox"  id="chk">
+        <label for="chk" class="show-btn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <label for="chk" class="hide-btn">
+            <i class="fa fa-times" ></i>
+        </label>
+    <div class="side-bar">
+        <ul>
+            <li>
+                <a href="#"><i class="fas fa-directions"></i><span>Get Direction</span></a>
+            </li>
+            <li>
+                <a href="#" class="active"><i class="fas fa-trash"></i><span>Garbage Bins</span></a>
+            </li>
+            <li>
+                <a href="{% url 'binsonmap' %}"><i class="fas fa-map"></i><span>Bins On Map</span></a>
+            </li>
+          </ul>
+      <!--<div class="social">
+        <a href="#" target="_blank" "><i class="fa fa-facebook-square"></i></a>
+        <a href="#" target="_blank" "><i class="fa fa-youtube-square" aria-hidden="true"></i></a>
+        <a href="#" target="_blank" "><i class="fa fa-instagram" aria-hidden="true"></i></a>
+      </div> -->
+    </div>
+    <button id = "route" type="button" class="btn btn-primary">Get Route</button>
+    <div class="main-content">
+        <table border = "1px" class="table">
+			<thead>
+			  <tr>
+				<th>Bin No.</th>
+				<th>Status</th>
+				<th>Bin Type</th>
+				<th>Installed On</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+				<td class="binid">001</td>
+				<td class="binstatus">72%</td>
+				<td class="bintype">Domestic</td>
+				<td class="installedon">2020-01-22 02:00:00</td>
+			  </tr>
+			  <tr>
+				<td class="binid">002</td>
+				<td class="binstatus">70%</td>
+				<td class="bintype">Domestic</td>
+				<td class="installedon">2020-01-22 02:00:00</td>
+			  </tr>
+			  <tr>
+				<td class="binid">003</td>
+				<td class="binstatus">71%</td>
+				<td class="bintype">Domestic</td>
+				<td class="installedon">2020-01-22 02:00:00</td>
+        </tr>
+        <tr>
+        <td class="binid">004</td>
+        <td class="binstatus">80%</td>
+        <td class="bintype">Domestic</td>
+        <td class="installedon">2020-01-22 02:00:00</td>
+        </tr>
+        <tr>
+				<td class="binid">005</td>
+				<td class="binstatus">79%</td>
+				<td class="bintype">Domestic</td>
+				<td class="installedon">2020-01-22 02:00:00</td>
+			  </tr>
+			</tbody>
+      </table>
+      <div class="popup">
+            <div class="popup-content">
+                <img src="{% static 'GarbageBins/close-button.png' %}" class="close"></img>
+                <h1 id="binid">Bin ID</h1><br>
+                <h1 id="bintype">Bin Type</h1><br>
+                <h1 id="binstatus">Bin Status</h1><br>
+                <h1 id="installedon">Installed On</h1><br>
+            </div>
+        </div>
+    </div>
+    <script>
+
+
+            document.querySelector(".close").addEventListener("click",function(){
+                document.querySelector(".popup").style.display = "none";
+            })
+      $(document).ready(function(){
+        $("table tbody tr").click(function(){
+        var a = $(this).find(".binid").text();
+          var b = $(this).find(".bintype").text();
+          var c = $(this).find(".binstatus").text();
+          var d = $(this).find(".installedon").text();
+          document.getElementById("binid").innerHTML = "Bin ID/IP: "+a;
+          document.getElementById("bintype").innerHTML = "Bin Type: "+b;
+          document.getElementById("binstatus").innerHTML = "Bin Status: "+c;
+          document.getElementById("installedon").innerHTML = "Installed On: "+d;
+          document.querySelector(".popup").style.display = "flex";
+        });
+      });
+
+    </script>
+  </body>
+</html>

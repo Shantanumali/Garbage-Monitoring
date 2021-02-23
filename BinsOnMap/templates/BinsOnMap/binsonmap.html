@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Side- Bar</title>
+      {% load static %}
+    <link rel="stylesheet" href="{% static 'BinsOnMap/binsonmap.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <style>
+        .map{
+            height: 500px;
+            width: 500px;
+        }
+    </style>
+    </head>
+
+  <body>
+    <div class="header">
+        <h2><i class="fa fa-leaf" aria-hidden="true"> Garbage Monitoring</i></h2><b id="GM"><i class="fa fa-leaf" aria-hidden="true"></i> GM</b>
+    </div>
+        <input type="checkbox"  id="chk">
+        <label for="chk" class="show-btn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <label for="chk" class="hide-btn">
+            <i class="fa fa-times" ></i>
+        </label>
+    <div class="side-bar">
+        <ul>
+            <li>
+                <a href="#"><i class="fas fa-directions"></i><span>Get Direction</span></a>
+            </li>
+            <li>
+                <a href="{% url 'garbagebins' %}"><i class="fas fa-trash"></i><span>Garbage Bins</span></a>
+            </li>
+            <li>
+                <a href="#" class = 'active'><i class="fas fa-map"></i><span>Bins On Map</span></a>
+            </li>
+          </ul>
+      <!--<div class="social">
+        <a href="#" target="_blank" "><i class="fa fa-facebook-square"></i></a>
+        <a href="#" target="_blank" "><i class="fa fa-youtube-square" aria-hidden="true"></i></a>
+        <a href="#" target="_blank" "><i class="fa fa-instagram" aria-hidden="true"></i></a>
+      </div> -->
+    </div>
+    <div class="main-content">
+        <center>
+            <h1>Google Map Example</h1>
+            <div class="map" id="map"></div>
+        </center>
+        <script>
+            var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+            var map;
+            var InforObj = [];
+            var centerCords = {
+                lat: 22.654257,
+                lng: 88.439802
+            };
+
+            var icons = {
+      leaf: {
+        icon: iconBase+'leaf.png'
+      },
+    };
+
+            var markersonmap = [
+            {
+                GarbageCanId: '1',
+                InstalledOn: 'Date',
+                LatLng: [{
+                    lat: 22.654257,
+                lng: 88.439802}],
+                type: 'leaf'
+            },
+            {
+                GarbageCanId: '2',
+                InstalledOn: 'Date',
+                LatLng: [{
+                    lat: 22.554257,
+                lng: 88.439802}],
+                type: 'leaf'
+            },
+            {
+                GarbageCanId: '3',
+                InstalledOn: 'Date',
+                LatLng: [{
+                    lat: 22.654257,
+                lng: 88.459802}],
+                type: 'leaf'
+            },
+            {
+                GarbageCanId: '4',
+                InstalledOn: 'Date',
+                LatLng: [{
+                    lat: 22.654257,
+                lng: 88.449802}],
+                type: 'leaf'
+            },
+            {
+                GarbageCanId: '5',
+                InstalledOn: 'Date',
+                LatLng: [{
+                    lat: 22.654257,
+                lng: 88.436565}],
+                type: 'leaf'
+            },
+
+        ]
+
+            window.onload = function(){
+                initMap();
+            };
+
+            function addmarkerinfo(){
+                for(var i = 0; i< markersonmap.length; i++ ){
+                    var contentString = '<h3>' + markersonmap[i].GarbageCanId +'</h3><br><h3>' + markersonmap[i].InstalledOn + '</h3>'
+                    const marker = new google.maps.Marker({
+                        position: markersonmap[i].LatLng[0],
+                        icon: icons[markersonmap[i].type].icon,
+                        map: map
+                    });
+                    const  infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                });
+
+                marker.addListener("click", function() {
+                    closeotherinfo();
+                infowindow.open(map, marker);
+                InforObj[0] = infowindow;
+            });
+                }
+        }
+
+    function closeotherinfo(){
+        if(InforObj.length > 0){
+            InforObj[0].set("marker", null),
+            InforObj[0].close();
+            InforObj[0].length = 0 ;
+        }
+    }
+
+            function initMap(){
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: centerCords
+                });
+
+
+            }
+        </script>
+        <script async defer
+        src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAZK-MnaLkb5A_x2D26nCEvPuEuEDsMmKo&callback=initMap'>
+        </script>
+    </div>
+    <script>
+
+
+            document.querySelector(".close").addEventListener("click",function(){
+                document.querySelector(".popup").style.display = "none";
+            })
+      $(document).ready(function(){
+        $("table tbody tr").click(function(){
+          document.querySelector(".popup").style.display = "flex";
+        });
+      });
+
+    </script>
+  </body>
+</html>
